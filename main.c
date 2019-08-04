@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include <unistd.h>
 
 int coin_throw()
 {
@@ -17,14 +19,39 @@ int coin_throw()
       total += 3;
     else
       printf("Error throwing coin");
-    printf("Throw %d: %d\n", i+1, random_num);
+
+    char* coin = random_num == 0 ? "Tails" : "Heads";
+
+    printf("%s ", coin);
   }
-  printf("Total: %d\n", total);
+  printf("\n");
+  return total;
 }
 
 int main()
 {
-  printf("Hello world\n");
-  coin_throw();
+  printf("\n -- C-Ching --\n");
+  char trigram[100];
+  int total;
+
+  for (int i = 0; i <= 6; i++) {
+    printf("Throw %d\n", i);
+    total = coin_throw();
+    printf("Total: %d\n\n", total);
+
+    if (total % 2 == 0) {
+      strcat(trigram, "---------");
+    }
+    else {
+      strcat(trigram, "---   ---");
+    }
+
+    if (total % 3 == 0) {
+      strcat(trigram, " *");
+    }
+    strcat(trigram, "\n");
+    sleep(1);
+  }
+  printf("%s\n", trigram);
   return 0;
 }
